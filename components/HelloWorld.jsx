@@ -1,9 +1,10 @@
 import React from 'react'
+import styles from '../css/index.css'
 
 class HelloWorld extends React.Component {
     render(){
         return <div>
-            <h1>Hello World!</h1>
+            <h1 className={styles.headline}>Hello World!</h1>
         </div>
     }
 }
