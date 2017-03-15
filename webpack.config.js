@@ -7,7 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: 'bundle.js'
     },
-    devtool:  "source-map",
+    devtool:  "cheap-module-source-map",
     module: {
         loaders: [
             {
@@ -29,7 +29,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'ENVIRONMENT': JSON.stringify(process.env.ENVIRONMENT)
+            'process.env.NODE_ENV': JSON.stringify("production")
         })
     ]
 };
