@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --watch --colors --progress --history-api-fallback --inline",
-    "build": "webpack --colors --progress --inline --config webpack.config.js"
+    "build": "webpack --colors --progress --config webpack.config.js"
   },
   "dependencies": {
     "react": "^15.4.2",
