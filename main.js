@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Route} from 'react-router-dom'
-import HelloWorld from './components/HelloWorld.jsx'
 
-ReactDOM.render((
-    <BrowserRouter>
-        <Route path="/" component={HelloWorld} />
-    </BrowserRouter>
-), document.getElementById("mount-point"));
+import App from './components/App.jsx'
+
+
+//Needed for onTouchTap
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+ReactDOM.render((<App />), document.getElementById("mount-point"));
