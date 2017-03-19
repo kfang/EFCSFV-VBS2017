@@ -9,7 +9,6 @@ class Home extends React.Component {
                 <img src="images/big-hero.png"/>
             </div>
 
-
             <Card>
                 <CardHeader title="God Made You" subtitle="Day 1"/>
                 <CardMedia
