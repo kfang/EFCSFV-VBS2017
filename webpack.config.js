@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: './main.js',
@@ -20,7 +21,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use:'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+                })
             }
         ]
     },
@@ -28,6 +32,7 @@ module.exports = {
         port: 3001
     },
     plugins: [
+        new ExtractTextPlugin({filename: 'style.css', allChunks: true}),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         })
