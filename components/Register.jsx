@@ -56,7 +56,7 @@ class Register extends React.Component {
 
 
     render(){
-        return <div className={style.container}>
+        return <form className={style.container}>
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>PARENT INFORMATION</h2></div>
                 <div className={style.registerFormRow}>
@@ -110,7 +110,7 @@ class Register extends React.Component {
                     {this.__renderCheckbox()}
                 </div>
             </Paper>
-        </div>
+        </form>
     }
 }
 
