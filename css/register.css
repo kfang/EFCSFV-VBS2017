@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: 0.5rem;
 }
 
 .title {
@@ -21,7 +20,8 @@ h2 {
     flex-direction: column;
     width: 100%;
     max-width: 1200px;
-    margin-top: 1rem;
+    margin: 1rem;
+
 }
 
 .registerFormRow {
@@ -36,6 +36,7 @@ h2 {
 
 .agreement {
     margin-left: 1rem;
+    margin-bottom: 1rem;
     width: 100%
 }
 
