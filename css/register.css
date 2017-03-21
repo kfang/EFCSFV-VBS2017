@@ -29,6 +29,15 @@ h2 {
     flex-wrap: wrap;
 }
 
+.liability {
+    margin: 1rem;
+}
+
+.agreement {
+    margin-left: 1rem;
+    width: 100%
+}
+
 .w1 {
     flex: 1 1 auto;
     margin: 0 1rem;
