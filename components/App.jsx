@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem'
 import {BrowserRouter, Route, withRouter} from 'react-router-dom'
 import Home from './Home.jsx'
 import About from './About.jsx'
+import Register from './Register.jsx'
 
 import style from '../css/app.css'
 
@@ -51,6 +52,7 @@ class App extends React.Component {
                     <Route exact path="/" component={Home} />
                     <Route path="/home" component={Home} />
                     <Route path="/about" component={About} />
+                    <Route path="/register" component={Register} />
                 </div>
             </BrowserRouter>
         </MuiThemeProvider>

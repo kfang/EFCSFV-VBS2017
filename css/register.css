@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    flex: 0 1 auto;
+}
+
+h2 {
+    padding: 0;
+    margin: 1rem 0 0 1rem;
+}
+
+.registerForm {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 1rem;
+}
+
+.registerFormRow {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.w1 {
+    flex: 1 1 auto;
+    margin: 0 1rem;
+}
+
+.w2 {
+    flex: 2 2 auto;
+    margin: 0 1rem;
+}
+
+.w3 {
+    flex: 3 3 auto;
+    margin: 0 1rem;
+}
+
+.w4 {
+    flex: 4 4 auto;
+    margin: 0 1rem;
+}
+
+.w5 {
+    flex: 10 5 auto;
+    margin: 0 1rem;
+}
