@@ -2,6 +2,8 @@ import React from 'react'
 
 import Checkbox from 'material-ui/Checkbox'
 import TextField from 'material-ui/TextField'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 
 import Paper from 'material-ui/Paper'
 import style from '../css/register.css'
@@ -15,7 +17,8 @@ class Register extends React.Component {
             inputs: {
                 pEmail: '',
                 pName: '',
-                isAgreed: false
+                isAgreed: false,
+                children: [{}]
             }
         }
     }
@@ -25,6 +28,14 @@ class Register extends React.Component {
         const v = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
         inputs[e.target.name] = v;
         this.setState({inputs: inputs});
+    };
+
+    __onChildFieldChange = (idx) => (e) => {
+        const {inputs} = this.state;
+        const {children} = inputs;
+        children[idx][e.target.name] = e.target.value;
+        this.setState({inputs: inputs});
+
     };
 
     __renderField = (field, label, className) => {
@@ -54,8 +65,42 @@ class Register extends React.Component {
         </div>
     };
 
+    __renderChildField = (field, label, className, idx) => {
+        const {inputs} = this.state;
+        const {children} = inputs;
+
+        const floatingLabelStyle = {
+            color: 'gray'
+        };
+        return <div className={className}>
+            <TextField
+                name={field}
+                fullWidth={true}
+                value={children[idx][field]}
+                onChange={this.__onChildFieldChange}
+                floatingLabelText={label}
+                floatingLabelStyle={floatingLabelStyle}
+            />
+        </div>
+    };
+
+    __renderChild = (child, idx) => {
+        return <Paper className={style.registerForm}>
+            <div className={style.registerFormRow}>
+                {this.__renderChildField("first", "First Name", style.w1, idx)}
+                {this.__renderChildField("last", "Last Name", style.w1, idx)}
+                <SelectField floatingLabelText={"Full/Half Day"}>
+                    <MenuItem value={"full-day"} primaryText={"Full Day"} />
+                    <MenuItem value={"half-day"} primaryText={"Half Day"} />
+                </SelectField>
+            </div>
+        </Paper>
+    };
 
     render(){
+        const {inputs} = this.state;
+        const {children} = inputs;
+
         return <form className={style.container}>
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>PARENT INFORMATION</h2></div>
@@ -75,6 +120,8 @@ class Register extends React.Component {
                     {this.__renderField("pHomeChurch", "Home Church", style.w3)}
                 </div>
             </Paper>
+
+            {children.map(this.__renderChild)}
 
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>EMERGENCY CONTACT</h2></div>
