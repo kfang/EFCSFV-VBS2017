@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Checkbox from 'material-ui/Checkbox'
+import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
@@ -35,7 +36,13 @@ class Register extends React.Component {
         const {children} = inputs;
         children[idx][e.target.name] = e.target.value;
         this.setState({inputs: inputs});
+    };
 
+    __onChildSelectChange = (idx, name) => (e, k, p) => {
+        const {inputs} = this.state;
+        const {children} = inputs;
+        children[idx][name] = p;
+        this.setState({inputs: inputs});
     };
 
     __renderField = (field, label, className) => {
@@ -85,15 +92,55 @@ class Register extends React.Component {
     };
 
     __renderChild = (child, idx) => {
-        return <Paper className={style.registerForm}>
+        return <Paper className={style.registerForm} key={idx}>
             <div className={style.registerFormRow}>
                 {this.__renderChildField("first", "First Name", style.w1, idx)}
                 {this.__renderChildField("last", "Last Name", style.w1, idx)}
-                <SelectField floatingLabelText={"Full/Half Day"}>
-                    <MenuItem value={"full-day"} primaryText={"Full Day"} />
-                    <MenuItem value={"half-day"} primaryText={"Half Day"} />
-                </SelectField>
+                <div className={style.w1}>
+                    <SelectField floatingLabelText={"Full/Half Day"} value={child.stay} onChange={this.__onChildSelectChange(idx, "stay")}>
+                        <MenuItem value={"full-day"} primaryText={"Full Day"} />
+                        <MenuItem value={"half-day"} primaryText={"Half Day"} />
+                    </SelectField>
+                </div>
             </div>
+
+            <div className={style.registerFormRow}>
+                <DatePicker autoOk={true} floatingLabelText="Birthday" className={style.w1} />
+
+                <div className={style.w1}>
+                    <SelectField floatingLabelText={"Grade"} value={child.grade} onChange={this.__onChildSelectChange(idx, "grade")}>
+                        <MenuItem value={"p"} primaryText={"Pre-school"} />
+                        <MenuItem value={"k"} primaryText={"Kindergarten"} />
+                        <MenuItem value={"1"} primaryText={"1st Grade"} />
+                        <MenuItem value={"2"} primaryText={"2nd Grade"} />
+                        <MenuItem value={"3"} primaryText={"3rd Grade"} />
+                        <MenuItem value={"4"} primaryText={"4th Grade"} />
+                        <MenuItem value={"5"} primaryText={"5th Grade"} />
+                        <MenuItem value={"6"} primaryText={"6th+ Grade"} />
+                    </SelectField>
+                </div>
+
+                <div className={style.w1}>
+                    <SelectField floatingLabelText={"Gender"} value={child.gender} onChange={this.__onChildSelectChange(idx, "gender")}>
+                        <MenuItem value={"male"} primaryText={"male"} />
+                        <MenuItem value={"female"} primaryText={"female"} />
+                    </SelectField>
+                </div>
+            </div>
+
+            <div className={style.registerFormRow}>
+                <div className={style.w1}>
+                    <TextField multiLine={true} rows={2} fullWidth={true} floatingLabelText="Allergies/Medication"/>
+                </div>
+            </div>
+
+            <div className={style.registerFormRow}>
+                <div className={style.w1}>
+                    <TextField multiLine={true} rows={2} fullWidth={true} floatingLabelText="Special Remarks (behavioral issues, special needs, etc...)"/>
+                </div>
+            </div>
+
+
         </Paper>
     };
 
