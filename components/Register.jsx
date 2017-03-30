@@ -11,6 +11,8 @@ import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
 import style from '../css/register.css'
 
+import {blue100} from 'material-ui/styles/colors'
+
 
 class Register extends React.Component {
 
@@ -20,11 +22,25 @@ class Register extends React.Component {
             inputs: {
                 pEmail: '',
                 pName: '',
+                pStreet: '',
+                pCity: '',
+                pState: '',
+                pZip: '',
+                pHomePhone: '',
+                pCellPhone: '',
+                pHomeChurch: '',
                 isAgreed: false,
-                children: [{}]
+                children: [{}],
+                eName: '',
+                ePhone: '',
+                eRelationship: ''
             }
         }
     }
+
+    __onSubmit = () => {
+
+    };
 
     __onFieldChange = (e) => {
         const {inputs} = this.state;
@@ -193,7 +209,7 @@ class Register extends React.Component {
             </Paper>
 
             {children.map(this.__renderChild)}
-            <RaisedButton label="Add Child" fullWidth={true} onTouchTap={this.__onAddChildClicked}/>
+            <RaisedButton label="Add Child" fullWidth={true} backgroundColor={blue100} onTouchTap={this.__onAddChildClicked}/>
 
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>EMERGENCY CONTACT</h2></div>
@@ -229,6 +245,7 @@ class Register extends React.Component {
                     {this.__renderCheckbox()}
                 </div>
             </Paper>
+            <RaisedButton label="Submit" fullWidth={true} backgroundColor={blue100} />
         </form>
     }
 }
