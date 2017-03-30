@@ -127,6 +127,7 @@ class Register extends React.Component {
         };
 
         return <Paper className={style.registerForm} key={idx}>
+            <div className={style.registerFormRow}><h2>CHILD #{idx}</h2></div>
             <div className={style.registerFormRow}>
                 {this.__renderChildField("first", "First Name", style.w1, idx)}
                 {this.__renderChildField("last", "Last Name", style.w1, idx)}
