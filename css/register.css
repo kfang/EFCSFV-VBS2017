@@ -45,22 +45,12 @@ h2 {
     margin: 0 1rem;
 }
 
-.w2 {
-    flex: 2 2 auto;
-    margin: 0 1rem;
+.buttonRow {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.w3 {
-    flex: 3 3 auto;
-    margin: 0 1rem;
-}
-
-.w4 {
-    flex: 4 4 auto;
-    margin: 0 1rem;
-}
-
-.w5 {
-    flex: 10 5 auto;
-    margin: 0 1rem;
+.button {
+    flex: 0 0 auto;
 }

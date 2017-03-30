@@ -2,7 +2,9 @@ import React from 'react'
 
 import Checkbox from 'material-ui/Checkbox'
 import DatePicker from 'material-ui/DatePicker'
+import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
@@ -28,6 +30,18 @@ class Register extends React.Component {
         const {inputs} = this.state;
         const v = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
         inputs[e.target.name] = v;
+        this.setState({inputs: inputs});
+    };
+
+    __onAddChildClicked = () => {
+        const {inputs} = this.state;
+        inputs.children.push({});
+        this.setState({inputs: inputs});
+    };
+
+    __onRemoveChildClicked = (idx) => () => {
+        const {inputs} = this.state;
+        inputs.children.splice(idx, 1);
         this.setState({inputs: inputs});
     };
 
@@ -92,12 +106,16 @@ class Register extends React.Component {
     };
 
     __renderChild = (child, idx) => {
+        const floatingLabelStyle = {
+            color: 'gray'
+        };
+
         return <Paper className={style.registerForm} key={idx}>
             <div className={style.registerFormRow}>
                 {this.__renderChildField("first", "First Name", style.w1, idx)}
                 {this.__renderChildField("last", "Last Name", style.w1, idx)}
                 <div className={style.w1}>
-                    <SelectField floatingLabelText={"Full/Half Day"} value={child.stay} onChange={this.__onChildSelectChange(idx, "stay")}>
+                    <SelectField floatingLabelText={"Full/Half Day"} floatingLabelStyle={floatingLabelStyle}  value={child.stay} onChange={this.__onChildSelectChange(idx, "stay")}>
                         <MenuItem value={"full-day"} primaryText={"Full Day"} />
                         <MenuItem value={"half-day"} primaryText={"Half Day"} />
                     </SelectField>
@@ -105,10 +123,10 @@ class Register extends React.Component {
             </div>
 
             <div className={style.registerFormRow}>
-                <DatePicker autoOk={true} floatingLabelText="Birthday" className={style.w1} />
+                <DatePicker autoOk={true} floatingLabelText="Birthday" floatingLabelStyle={floatingLabelStyle}  className={style.w1} />
 
                 <div className={style.w1}>
-                    <SelectField floatingLabelText={"Grade"} value={child.grade} onChange={this.__onChildSelectChange(idx, "grade")}>
+                    <SelectField floatingLabelText={"Grade"} floatingLabelStyle={floatingLabelStyle} value={child.grade} onChange={this.__onChildSelectChange(idx, "grade")}>
                         <MenuItem value={"p"} primaryText={"Pre-school"} />
                         <MenuItem value={"k"} primaryText={"Kindergarten"} />
                         <MenuItem value={"1"} primaryText={"1st Grade"} />
@@ -121,7 +139,7 @@ class Register extends React.Component {
                 </div>
 
                 <div className={style.w1}>
-                    <SelectField floatingLabelText={"Gender"} value={child.gender} onChange={this.__onChildSelectChange(idx, "gender")}>
+                    <SelectField floatingLabelText={"Gender"} floatingLabelStyle={floatingLabelStyle}  value={child.gender} onChange={this.__onChildSelectChange(idx, "gender")}>
                         <MenuItem value={"male"} primaryText={"male"} />
                         <MenuItem value={"female"} primaryText={"female"} />
                     </SelectField>
@@ -130,13 +148,19 @@ class Register extends React.Component {
 
             <div className={style.registerFormRow}>
                 <div className={style.w1}>
-                    <TextField multiLine={true} rows={2} fullWidth={true} floatingLabelText="Allergies/Medication"/>
+                    <TextField multiLine={true} rows={1} fullWidth={true} floatingLabelText="Allergies/Medication" floatingLabelStyle={floatingLabelStyle} />
                 </div>
             </div>
 
             <div className={style.registerFormRow}>
                 <div className={style.w1}>
-                    <TextField multiLine={true} rows={2} fullWidth={true} floatingLabelText="Special Remarks (behavioral issues, special needs, etc...)"/>
+                    <TextField multiLine={true} rows={1} fullWidth={true} floatingLabelText="Special Remarks (behavioral issues, special needs, etc...)" floatingLabelStyle={floatingLabelStyle} />
+                </div>
+            </div>
+
+            <div className={style.buttonRow}>
+                <div className={style.button}>
+                    <FlatButton label={"Remove"} secondary={true} onTouchTap={this.__onRemoveChildClicked(idx)}/>
                 </div>
             </div>
 
@@ -169,6 +193,7 @@ class Register extends React.Component {
             </Paper>
 
             {children.map(this.__renderChild)}
+            <RaisedButton label="Add Child" fullWidth={true} onTouchTap={this.__onAddChildClicked}/>
 
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>EMERGENCY CONTACT</h2></div>
