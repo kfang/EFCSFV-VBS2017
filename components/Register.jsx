@@ -19,31 +19,43 @@ class Register extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            isConfirmationPage: false,
             inputs: {
-                pEmail: '',
-                pFirst: '',
-                pLast: '',
-                pStreet: '',
-                pCity: '',
-                pState: '',
-                pZip: '',
-                pHomePhone: '',
-                pCellPhone: '',
-                pHomeChurch: '',
-                isAgreed: false,
-                children: [{}],
-                eName: '',
-                ePhone: '',
-                eRelationship: ''
+                pEmail: 'j',
+                pFirst: 'j',
+                pLast: 'j',
+                pStreet: 'j',
+                pCity: 'j',
+                pState: 'j',
+                pZip: 'j',
+                pHomePhone: 'j',
+                pCellPhone: 'j',
+                pHomeChurch: 'j',
+                isAgreed: true,
+                children: [{
+                    first: 'j',
+                    last: 'j',
+                    stay: 'full-day',
+                    grade: '3',
+                    gender: 'male',
+                    allergies: 'j',
+                    remarks: 'j',
+                    birthday: new Date()
+                }],
+                eFirst: 'j',
+                eLast: 'eLast',
+                ePhone: 'j',
+                eRelationship: 'j'
             }
         }
     }
 
     __verifyEmergency = () => {
         const {inputs} = this.state;
-        const {eName, ePhone, eRelationship} = inputs;
+        const {eFirst, eLast, ePhone, eRelationship} = inputs;
         const errors = {};
-        if(eName.length === 0) errors.eNameError = "required";
+        if(eFirst.length === 0) errors.eFirstError = "required";
+        if(eLast.length === 0) errors.eLastError = "required";
         if(ePhone.length === 0) errors.ePhoneError = "required";
         if(eRelationship.length === 0) errors.eRelationshipError = "required";
 
@@ -122,7 +134,56 @@ class Register extends React.Component {
         console.log("v: " + isVerifiedChecked);
 
         if(isEmergencyValid && isParentValid && areChildrenValid && isVerifiedChecked){
-            return console.log("GOOD TO GO")
+
+            const registrants = inputs.children.map((child) => {
+                return {
+                    firstName: child.first,
+                    lastName: child.last,
+                    gender: child.gender,
+                    birthday: child.birthday.getTime(),
+                    allergies: child.allergies,
+                    comments: child.remarks,
+                    extraInformation: {
+                        stay: child.stay
+                    },
+                }
+            });
+
+            const emergency = {
+                firstName: inputs.eFirst,
+                lastName: inputs.eLast,
+                homePhone: inputs.ePhone,
+                relationship: inputs.eRelationship,
+                flags: ['emergency']
+            };
+
+            const parent = {
+                firstName: inputs.pFirst,
+                lastName: inputs.pLast,
+
+                street: inputs.pStreet,
+                city: inputs.pCity,
+                state: inputs.pState,
+                zip: inputs.pZip,
+
+                homePhone: inputs.pHomePhone,
+                cellPhone: inputs.pCellPhone,
+
+                flags: ['guardian'],
+                extraInfomation: {
+                    homeChurch: inputs.pHomeChurch
+                }
+            };
+
+            fetch('http://kfang.xyz:9091/registrations', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    registrants: registrants,
+                    contacts: [emergency, parent]
+                })
+            })
+
         } else {
             inputs.submitError = "We're missing some information in your submission. Please fix them before continuing.";
             this.setState({inputs: inputs});
@@ -360,7 +421,8 @@ class Register extends React.Component {
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>EMERGENCY CONTACT</h2></div>
                 <div className={style.registerFormRow}>
-                    {this.__renderField("eName", "Full Name", style.w1)}
+                    {this.__renderField("eFirst", "First Name", style.w1)}
+                    {this.__renderField("eLast", "Last Name", style.w1)}
                     {this.__renderField("ePhone", "Phone", style.w1)}
                     {this.__renderField("eRelationship", "Relationship", style.w1)}
                 </div>
