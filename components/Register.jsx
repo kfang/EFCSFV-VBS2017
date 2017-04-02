@@ -21,31 +21,30 @@ class Register extends React.Component {
         this.state = {
             isConfirmationPage: false,
             inputs: {
-                pEmail: 'j',
-                pFirst: 'j',
-                pLast: 'j',
-                pStreet: 'j',
-                pCity: 'j',
-                pState: 'j',
-                pZip: 'j',
-                pHomePhone: 'j',
-                pCellPhone: 'j',
-                pHomeChurch: 'j',
+                pEmail: '',
+                pFirst: '',
+                pLast: '',
+                pStreet: '',
+                pCity: '',
+                pState: '',
+                pZip: '',
+                pHomePhone: '',
+                pCellPhone: '',
+                pHomeChurch: '',
                 isAgreed: true,
                 children: [{
-                    first: 'j',
-                    last: 'j',
-                    stay: 'full-day',
-                    grade: '3',
-                    gender: 'male',
-                    allergies: 'j',
-                    remarks: 'j',
-                    birthday: new Date()
+                    first: '',
+                    last: '',
+                    stay: '',
+                    grade: '',
+                    gender: '',
+                    allergies: '',
+                    remarks: ''
                 }],
-                eFirst: 'j',
-                eLast: 'eLast',
-                ePhone: 'j',
-                eRelationship: 'j'
+                eFirst: '',
+                eLast: '',
+                ePhone: '',
+                eRelationship: ''
             }
         }
     }
