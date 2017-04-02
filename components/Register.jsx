@@ -21,7 +21,8 @@ class Register extends React.Component {
         this.state = {
             inputs: {
                 pEmail: '',
-                pName: '',
+                pFirst: '',
+                pLast: '',
                 pStreet: '',
                 pCity: '',
                 pState: '',
@@ -38,14 +39,101 @@ class Register extends React.Component {
         }
     }
 
-    __onSubmit = () => {
+    __verifyEmergency = () => {
+        const {inputs} = this.state;
+        const {eName, ePhone, eRelationship} = inputs;
+        const errors = {};
+        if(eName.length === 0) errors.eNameError = "required";
+        if(ePhone.length === 0) errors.ePhoneError = "required";
+        if(eRelationship.length === 0) errors.eRelationshipError = "required";
 
+        const errorKeys = Object.keys(errors);
+        errorKeys.forEach((k) => inputs[k] = errors[k]);
+        return errorKeys.length === 0;
+    };
+
+    __verifyParent = () => {
+        const {inputs} = this.state;
+        const {pFirst, pLast, pEmail, pStreet, pCity, pState, pZip} = inputs;
+        const {pHomePhone, pCellPhone, pHomeChurch} = inputs;
+
+        const errors = {};
+
+        if(pFirst.length === 0) errors.pFirstError = 'required';
+        if(pLast.length === 0) errors.pLastError = 'required';
+        if(pEmail.length === 0) errors.pEmailError = 'required';
+        if(pStreet.length === 0) errors.pStreetError = 'required';
+        if(pCity.length === 0) errors.pCityError = 'required';
+        if(pState.length === 0) errors.pStateError = 'required';
+        if(pZip.length === 0) errors.pZipError = 'required';
+        if(pHomePhone.length === 0) errors.pHomePhoneError = 'required';
+        if(pCellPhone.length === 0) errors.pCellPhoneError = 'required';
+        if(pHomeChurch.length === 0) errors.pHomeChurchError = 'required';
+
+        const errorKeys = Object.keys(errors);
+        errorKeys.forEach((key) => inputs[key] = errors[key]);
+        return errorKeys.length === 0;
+    };
+
+    __verifyChild = (child, idx) => {
+        const {first, last, stay, grade, gender, birthday} = child;
+
+        const isValidStr = (str) => {
+            return str !== undefined && str.length > 0;
+        };
+
+        const errors = {};
+
+        if(!isValidStr(first)) errors.firstError = 'required';
+        if(!isValidStr(last)) errors.lastError = 'required';
+        if(!isValidStr(stay)) errors.stayError = 'required';
+        if(!isValidStr(grade)) errors.gradeError = 'required';
+        if(!isValidStr(gender)) errors.genderError = 'required';
+
+        if(birthday === undefined) errors.birthdayError = 'required';
+
+        const errorKeys = Object.keys(errors);
+        errorKeys.forEach((key) => child[key] = errors[key]);
+        return errorKeys.length === 0;
+    };
+
+    __verifyChecked = () => {
+        const {inputs} = this.state;
+        const {isAgreed} = inputs;
+        if(isAgreed === undefined || isAgreed === false){
+            inputs.isAgreedError = 'you must agree to the liability';
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    __onSubmit = () => {
+        const {inputs} = this.state;
+        const {children} = inputs;
+        const isParentValid = this.__verifyParent();
+        const isEmergencyValid = this.__verifyEmergency();
+        const isVerifiedChecked = this.__verifyChecked();
+        const areChildrenValid = !children.map(this.__verifyChild).includes(false);
+
+        console.log("e: " + isEmergencyValid);
+        console.log("p: " + isParentValid);
+        console.log("c: " + areChildrenValid);
+        console.log("v: " + isVerifiedChecked);
+
+        if(isEmergencyValid && isParentValid && areChildrenValid && isVerifiedChecked){
+            return console.log("GOOD TO GO")
+        } else {
+            inputs.submitError = "We're missing some information in your submission. Please fix them before continuing.";
+            this.setState({inputs: inputs});
+        }
     };
 
     __onFieldChange = (e) => {
         const {inputs} = this.state;
         const v = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
         inputs[e.target.name] = v;
+        delete inputs[e.target.name + 'Error'];
         this.setState({inputs: inputs});
     };
 
@@ -65,13 +153,22 @@ class Register extends React.Component {
         const {inputs} = this.state;
         const {children} = inputs;
         children[idx][e.target.name] = e.target.value;
+        delete children[idx][e.target.name + 'Error'];
         this.setState({inputs: inputs});
+    };
+
+    __onChildBirthdayChange = (idx) => (a, date) => {
+        const {inputs} = this.state;
+        inputs.children[idx]['birthday'] = date;
+        delete inputs.children[idx]['birthdayError'];
+        this.setState({inputs: inputs})
     };
 
     __onChildSelectChange = (idx, name) => (e, k, p) => {
         const {inputs} = this.state;
         const {children} = inputs;
         children[idx][name] = p;
+        delete children[idx][name + 'Error'];
         this.setState({inputs: inputs});
     };
 
@@ -80,12 +177,15 @@ class Register extends React.Component {
         const floatingLabelStyle = {
             color: 'gray'
         };
+
+        const errField = field + 'Error';
         return <div className={className}>
             <TextField
                 name={field}
                 fullWidth={true}
                 value={inputs[field]}
                 onChange={this.__onFieldChange}
+                errorText={inputs[errField]}
                 floatingLabelText={label}
                 floatingLabelStyle={floatingLabelStyle}
             />
@@ -94,11 +194,18 @@ class Register extends React.Component {
 
     __renderCheckbox = () => {
         const {inputs} = this.state;
-        const {isAgreed} = inputs;
+        const {isAgreed, isAgreedError} = inputs;
         const label = "I agree to the Liability Agreement stated above";
 
+        const error = isAgreedError ? <span style={{color: 'red'}}>{isAgreedError}</span> : null;
+
         return <div className={style.agreement}>
-            <Checkbox label={label} checked={isAgreed} name="isAgreed" onCheck={this.__onFieldChange} />
+            <Checkbox
+                label={label}
+                checked={isAgreed} name="isAgreed"
+                onCheck={this.__onFieldChange}
+            />
+            {error}
         </div>
     };
 
@@ -109,30 +216,37 @@ class Register extends React.Component {
         const floatingLabelStyle = {
             color: 'gray'
         };
+
         return <div className={className}>
             <TextField
                 name={field}
                 fullWidth={true}
                 value={children[idx][field]}
-                onChange={this.__onChildFieldChange}
+                onChange={this.__onChildFieldChange(idx)}
                 floatingLabelText={label}
                 floatingLabelStyle={floatingLabelStyle}
+                errorText={children[idx][field + 'Error']}
             />
         </div>
     };
 
     __renderChild = (child, idx) => {
+        const {allergies, remarks, birthday, birthdayError} = child;
         const floatingLabelStyle = {
             color: 'gray'
         };
 
         return <Paper className={style.registerForm} key={idx}>
-            <div className={style.registerFormRow}><h2>CHILD #{idx}</h2></div>
+            <div className={style.registerFormRow}><h2>CHILD #{idx + 1}</h2></div>
             <div className={style.registerFormRow}>
                 {this.__renderChildField("first", "First Name", style.w1, idx)}
                 {this.__renderChildField("last", "Last Name", style.w1, idx)}
                 <div className={style.w1}>
-                    <SelectField floatingLabelText={"Full/Half Day"} floatingLabelStyle={floatingLabelStyle}  value={child.stay} onChange={this.__onChildSelectChange(idx, "stay")}>
+                    <SelectField
+                        floatingLabelText={"Full/Half Day"} floatingLabelStyle={floatingLabelStyle}
+                        value={child.stay} errorText={child.stayError}
+                        onChange={this.__onChildSelectChange(idx, "stay")}
+                    >
                         <MenuItem value={"full-day"} primaryText={"Full Day"} />
                         <MenuItem value={"half-day"} primaryText={"Half Day"} />
                     </SelectField>
@@ -140,10 +254,19 @@ class Register extends React.Component {
             </div>
 
             <div className={style.registerFormRow}>
-                <DatePicker autoOk={true} floatingLabelText="Birthday" floatingLabelStyle={floatingLabelStyle}  className={style.w1} />
+                <DatePicker
+                    autoOk={true} className={style.w1}
+                    floatingLabelText="Birthday" floatingLabelStyle={floatingLabelStyle}
+                    name="birthday" value={birthday} errorText={birthdayError}
+                    onChange={this.__onChildBirthdayChange(idx)}
+                />
 
                 <div className={style.w1}>
-                    <SelectField floatingLabelText={"Grade"} floatingLabelStyle={floatingLabelStyle} value={child.grade} onChange={this.__onChildSelectChange(idx, "grade")}>
+                    <SelectField
+                        floatingLabelText={"Grade"} floatingLabelStyle={floatingLabelStyle}
+                        value={child.grade} errorText={child.gradeError}
+                        onChange={this.__onChildSelectChange(idx, "grade")}
+                    >
                         <MenuItem value={"p"} primaryText={"Pre-school"} />
                         <MenuItem value={"k"} primaryText={"Kindergarten"} />
                         <MenuItem value={"1"} primaryText={"1st Grade"} />
@@ -151,12 +274,16 @@ class Register extends React.Component {
                         <MenuItem value={"3"} primaryText={"3rd Grade"} />
                         <MenuItem value={"4"} primaryText={"4th Grade"} />
                         <MenuItem value={"5"} primaryText={"5th Grade"} />
-                        <MenuItem value={"6"} primaryText={"6th+ Grade"} />
+                        <MenuItem value={"6+"} primaryText={"6th+ Grade"} />
                     </SelectField>
                 </div>
 
                 <div className={style.w1}>
-                    <SelectField floatingLabelText={"Gender"} floatingLabelStyle={floatingLabelStyle}  value={child.gender} onChange={this.__onChildSelectChange(idx, "gender")}>
+                    <SelectField
+                        floatingLabelText={"Gender"} floatingLabelStyle={floatingLabelStyle}
+                        value={child.gender} errorText={child.genderError}
+                        onChange={this.__onChildSelectChange(idx, "gender")}
+                    >
                         <MenuItem value={"male"} primaryText={"male"} />
                         <MenuItem value={"female"} primaryText={"female"} />
                     </SelectField>
@@ -165,21 +292,35 @@ class Register extends React.Component {
 
             <div className={style.registerFormRow}>
                 <div className={style.w1}>
-                    <TextField multiLine={true} rows={1} fullWidth={true} floatingLabelText="Allergies/Medication" floatingLabelStyle={floatingLabelStyle} />
+                    <TextField
+                        multiLine={true} rows={1} fullWidth={true}
+                        floatingLabelText="Allergies/Medication"
+                        floatingLabelStyle={floatingLabelStyle}
+                        name="allergies" value={allergies}
+                        onChange={this.__onChildFieldChange(idx)}
+                    />
                 </div>
             </div>
 
             <div className={style.registerFormRow}>
                 <div className={style.w1}>
-                    <TextField multiLine={true} rows={1} fullWidth={true} floatingLabelText="Special Remarks (behavioral issues, special needs, etc...)" floatingLabelStyle={floatingLabelStyle} />
+                    <TextField
+                        multiLine={true} rows={1} fullWidth={true}
+                        floatingLabelText="Special Remarks (behavioral issues, special needs, etc...)"
+                        floatingLabelStyle={floatingLabelStyle}
+                        name="remarks" value={remarks}
+                        onChange={this.__onChildFieldChange(idx)}
+                    />
                 </div>
             </div>
 
-            <div className={style.buttonRow}>
-                <div className={style.button}>
-                    <FlatButton label={"Remove"} secondary={true} onTouchTap={this.__onRemoveChildClicked(idx)}/>
+            {idx === 0 ? null :
+                <div className={style.buttonRow}>
+                    <div className={style.button}>
+                        <FlatButton label={"Remove"} secondary={true} onTouchTap={this.__onRemoveChildClicked(idx)}/>
+                    </div>
                 </div>
-            </div>
+            }
 
 
         </Paper>
@@ -193,11 +334,12 @@ class Register extends React.Component {
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>PARENT INFORMATION</h2></div>
                 <div className={style.registerFormRow}>
-                    {this.__renderField("pName", "Parent's Name", style.w1)}
-                    {this.__renderField("pEmail", "Parent's Email", style.w1)}
+                    {this.__renderField("pFirst", "First Name", style.w1)}
+                    {this.__renderField("pLast", "Last Name", style.w1)}
+                    {this.__renderField("pEmail", "Email", style.w1)}
                 </div>
                 <div className={style.registerFormRow}>
-                    {this.__renderField("pStreet", "Street Address", style.w5)}
+                    {this.__renderField("pStreet", "Street Address", style.w3)}
                     {this.__renderField("pCity", "City", style.w1)}
                     {this.__renderField("pState", "State", style.w1)}
                     {this.__renderField("pZip", "Zip", style.w1)}
@@ -205,12 +347,15 @@ class Register extends React.Component {
                 <div className={style.registerFormRow}>
                     {this.__renderField("pHomePhone", "Home Phone", style.w1)}
                     {this.__renderField("pCellPhone", "Cell Phone", style.w1)}
-                    {this.__renderField("pHomeChurch", "Home Church", style.w3)}
+                    {this.__renderField("pHomeChurch", "Home Church", style.w1)}
                 </div>
             </Paper>
 
             {children.map(this.__renderChild)}
-            <RaisedButton label="Add Child" fullWidth={true} backgroundColor={blue100} onTouchTap={this.__onAddChildClicked}/>
+
+            <div className={style.registerForm}>
+                <RaisedButton label="Add Child" fullWidth={true} backgroundColor={blue100} onTouchTap={this.__onAddChildClicked}/>
+            </div>
 
             <Paper className={style.registerForm}>
                 <div className={style.registerFormRow}><h2>EMERGENCY CONTACT</h2></div>
@@ -246,7 +391,11 @@ class Register extends React.Component {
                     {this.__renderCheckbox()}
                 </div>
             </Paper>
-            <RaisedButton label="Submit" fullWidth={true} backgroundColor={blue100} />
+
+            <div className={style.registerForm}>
+                {inputs.submitError ? <span style={{color: 'red'}}>{inputs.submitError}</span> : null}
+                <RaisedButton label="Submit" fullWidth={true} backgroundColor={blue100} onTouchTap={this.__onSubmit}/>
+            </div>
         </form>
     }
 }

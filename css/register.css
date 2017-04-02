@@ -43,7 +43,13 @@ h2 {
 }
 
 .w1 {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
+    margin: 0rem 1rem;
+}
+
+.w3 {
+    flex: 30 0 auto;
+    margin: 0rem 1rem;
 }
 
 .buttonRow {
