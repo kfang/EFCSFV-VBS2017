@@ -181,6 +181,15 @@ class Register extends React.Component {
                     registrants: registrants,
                     contacts: [emergency, parent]
                 })
+            }).then((r) => {
+                return r.json()
+            }).then((r) => {
+                const {registration, contacts, registrants} = r;
+                const {code} = registration;
+
+                console.log(code);
+
+                this.setState({registrationCode: code});
             })
 
         } else {
@@ -386,7 +395,7 @@ class Register extends React.Component {
         </Paper>
     };
 
-    render(){
+    __renderRegistrationForm = () => {
         const {inputs} = this.state;
         const {children} = inputs;
 
@@ -431,23 +440,23 @@ class Register extends React.Component {
                 <div className={style.registerFormRow}><h2>LIABILITY</h2></div>
                 <div className={style.registerFormRow}>
                     <p className={style.liability}>
-                    I give permission for son, daughter, or ward to take part in Evangelical Formosan Church of
-                    San Fernando Valley (EFC-SFV hereafter) VBS program from June 13, 2015 through June 17, 2015.
-                    In consideration of my decision to allow my child to walk around the church campus, and fully
-                    recognizing that such an undertaking involves an element of risk, I assume all risks and hazards
-                    of my decision. I hereby release, absolve, and indemnify and agree to hold harmless EFC-SFV, its
-                    agents, employees, and officers; the chaperones, leaders, organizers and sponsors. EFC-SFV, nor
-                    any of the aforementioned people shall be held financially responsible for any injury, illness or
-                    death incurred as a direct or indirect result of my decision.
+                        I give permission for son, daughter, or ward to take part in Evangelical Formosan Church of
+                        San Fernando Valley (EFC-SFV hereafter) VBS program from June 13, 2015 through June 17, 2015.
+                        In consideration of my decision to allow my child to walk around the church campus, and fully
+                        recognizing that such an undertaking involves an element of risk, I assume all risks and hazards
+                        of my decision. I hereby release, absolve, and indemnify and agree to hold harmless EFC-SFV, its
+                        agents, employees, and officers; the chaperones, leaders, organizers and sponsors. EFC-SFV, nor
+                        any of the aforementioned people shall be held financially responsible for any injury, illness or
+                        death incurred as a direct or indirect result of my decision.
 
-                    <br />
-                    <br />
+                        <br />
+                        <br />
 
-                    In the event that medical treatment is required, and if I cannot seek treatment on my own, I give
-                    my permission for the staff to seek the service of a licensed physician to provide the necessary
-                    care, including anesthesia, for my well-being. I also give permission to notify the person listed
-                    below that there is a medical emergency. I have disclosed all of my significant medical, health
-                    and special needs information.
+                        In the event that medical treatment is required, and if I cannot seek treatment on my own, I give
+                        my permission for the staff to seek the service of a licensed physician to provide the necessary
+                        care, including anesthesia, for my well-being. I also give permission to notify the person listed
+                        below that there is a medical emergency. I have disclosed all of my significant medical, health
+                        and special needs information.
                     </p>
                     {this.__renderCheckbox()}
                 </div>
@@ -458,6 +467,21 @@ class Register extends React.Component {
                 <RaisedButton label="Submit" fullWidth={true} backgroundColor={blue100} onTouchTap={this.__onSubmit}/>
             </div>
         </form>
+    };
+
+    render(){
+        const {registrationCode} = this.state;
+
+        if(registrationCode){
+            return <div className={style.registerForm}>
+                <Paper className={style.confirmationContainer}>
+                    <h1>Thanks for Registering!</h1>
+                    <h4>Your confirmation Code: {registrationCode}</h4>
+                </Paper>
+            </div>
+        } else {
+            return this.__renderRegistrationForm()
+        }
     }
 }
 

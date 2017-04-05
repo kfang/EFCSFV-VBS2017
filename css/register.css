@@ -42,6 +42,10 @@ h2 {
     width: 100%
 }
 
+.confirmationContainer {
+    padding: 1rem;
+}
+
 .w1 {
     flex: 1 0 auto;
     margin: 0rem 1rem;
@@ -61,3 +65,5 @@ h2 {
 .button {
     flex: 0 0 auto;
 }
+
+
