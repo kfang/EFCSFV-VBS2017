@@ -176,7 +176,7 @@ class Register extends React.Component {
                 }
             };
 
-            fetch('http://kfang.xyz:9091/registrations', {
+            fetch('https://registry.kfang.xyz/registrations', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -188,8 +188,6 @@ class Register extends React.Component {
             }).then((r) => {
                 const {registration, contacts, registrants} = r;
                 const {code} = registration;
-
-                console.log(code);
 
                 this.setState({registrationCode: code});
             })

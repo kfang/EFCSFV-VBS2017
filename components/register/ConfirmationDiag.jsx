@@ -18,7 +18,7 @@ class ConfirmationDiag extends React.Component {
                     <li>
                         Send it to: <br />
                         <p>
-                        EFC SFV --VBS<br />
+                        EFC SFV -- VBS<br />
                         7702 Tampa Avenue<br />
                         Reseda, 91335
                         </p>
