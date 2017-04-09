@@ -1,5 +1,7 @@
 import React from 'react'
 
+import ConfirmationDiag from './register/ConfirmationDiag.jsx'
+
 import Checkbox from 'material-ui/Checkbox'
 import DatePicker from 'material-ui/DatePicker'
 import FlatButton from 'material-ui/FlatButton'
@@ -7,8 +9,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-
 import Paper from 'material-ui/Paper'
+
 import style from '../css/register.css'
 
 import {blue100} from 'material-ui/styles/colors'
@@ -31,7 +33,7 @@ class Register extends React.Component {
                 pHomePhone: '',
                 pCellPhone: '',
                 pHomeChurch: '',
-                isAgreed: true,
+                isAgreed: false,
                 children: [{
                     first: '',
                     last: '',
@@ -440,23 +442,24 @@ class Register extends React.Component {
                 <div className={style.registerFormRow}><h2>LIABILITY</h2></div>
                 <div className={style.registerFormRow}>
                     <p className={style.liability}>
-                        I give permission for son, daughter, or ward to take part in Evangelical Formosan Church of
-                        San Fernando Valley (EFC-SFV hereafter) VBS program from June 13, 2015 through June 17, 2015.
-                        In consideration of my decision to allow my child to walk around the church campus, and fully
-                        recognizing that such an undertaking involves an element of risk, I assume all risks and hazards
-                        of my decision. I hereby release, absolve, and indemnify and agree to hold harmless EFC-SFV, its
-                        agents, employees, and officers; the chaperones, leaders, organizers and sponsors. EFC-SFV, nor
-                        any of the aforementioned people shall be held financially responsible for any injury, illness or
-                        death incurred as a direct or indirect result of my decision.
+                        I give permission for my child or ward to take part in Evangelical Formosan Church of
+                        San Fernando Valley (EFC-SFV hereafter) VBS program from June 19, 2017 through June 23, 2017.
+                        In consideration of my decision to allow my child/ward to walk around the church campus
+                        unsupervised, and fully recognizing that such an undertaking involves an element of risk,
+                        I assume all risks and hazards of my decision. I hereby release, absolve and indemnify and
+                        agree to hold harmless EFC-SFV, it agents, employees, and officers; the chaperones, leaders,
+                        organizers and sponsors. EFC-SFV and any of the aforementioned people shall not be held
+                        financially responsible for any injury, illness or death occurring as a direct or indirect
+                        result of my decision
 
                         <br />
                         <br />
 
-                        In the event that medical treatment is required, and if I cannot seek treatment on my own, I give
-                        my permission for the staff to seek the service of a licensed physician to provide the necessary
-                        care, including anesthesia, for my well-being. I also give permission to notify the person listed
-                        below that there is a medical emergency. I have disclosed all of my significant medical, health
-                        and special needs information.
+                        In the event that medical treatment is required, and if I cannot seek treatment on my own,
+                        I give my permission for the staff to seek the service of a licensed physician to provide the
+                        necessary care, including anesthesia, for my child's/ward's well-being. I also give permission
+                        to notify the person listed that here is a medical emergency. I have disclosed all of my
+                        child's/ward's significant medical, health and special needs information.
                     </p>
                     {this.__renderCheckbox()}
                 </div>
@@ -473,12 +476,7 @@ class Register extends React.Component {
         const {registrationCode} = this.state;
 
         if(registrationCode){
-            return <div className={style.registerForm}>
-                <Paper className={style.confirmationContainer}>
-                    <h1>Thanks for Registering!</h1>
-                    <h4>Your confirmation Code: {registrationCode}</h4>
-                </Paper>
-            </div>
+            return <ConfirmationDiag registrationCode={registrationCode}/>
         } else {
             return this.__renderRegistrationForm()
         }
