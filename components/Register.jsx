@@ -167,6 +167,7 @@ class Register extends React.Component {
                 state: inputs.pState,
                 zip: inputs.pZip,
 
+                email: inputs.pEmail,
                 homePhone: inputs.pHomePhone,
                 cellPhone: inputs.pCellPhone,
 
