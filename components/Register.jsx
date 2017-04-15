@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ConfirmationDiag from './register/ConfirmationDiag.jsx'
+import RegisterInformation from "./register/RegisterInformation.jsx";
 
 import Checkbox from 'material-ui/Checkbox'
 import DatePicker from 'material-ui/DatePicker'
@@ -89,7 +90,7 @@ class Register extends React.Component {
     };
 
     __verifyChild = (child, idx) => {
-        const {first, last, stay, grade, gender, birthday} = child;
+        const {first, last, stay, grade, gender, birthday, tShirt} = child;
 
         const isValidStr = (str) => {
             return str !== undefined && str.length > 0;
@@ -102,6 +103,7 @@ class Register extends React.Component {
         if(!isValidStr(stay)) errors.stayError = 'required';
         if(!isValidStr(grade)) errors.gradeError = 'required';
         if(!isValidStr(gender)) errors.genderError = 'required';
+        if(!isValidStr(tShirt)) errors.tShirtError = 'required';
 
         if(birthday === undefined) errors.birthdayError = 'required';
 
@@ -129,11 +131,6 @@ class Register extends React.Component {
         const isVerifiedChecked = this.__verifyChecked();
         const areChildrenValid = !children.map(this.__verifyChild).includes(false);
 
-        console.log("e: " + isEmergencyValid);
-        console.log("p: " + isParentValid);
-        console.log("c: " + areChildrenValid);
-        console.log("v: " + isVerifiedChecked);
-
         if(isEmergencyValid && isParentValid && areChildrenValid && isVerifiedChecked){
 
             const registrants = inputs.children.map((child) => {
@@ -145,7 +142,9 @@ class Register extends React.Component {
                     allergies: child.allergies,
                     comments: child.remarks,
                     extraInformation: {
-                        stay: child.stay
+                        stay: child.stay,
+                        tShirt: child.tShirt,
+                        grade: child.grade
                     },
                 }
             });
@@ -354,8 +353,21 @@ class Register extends React.Component {
                         value={child.gender} errorText={child.genderError}
                         onChange={this.__onChildSelectChange(idx, "gender")}
                     >
-                        <MenuItem value={"male"} primaryText={"male"} />
-                        <MenuItem value={"female"} primaryText={"female"} />
+                        <MenuItem value={"male"} primaryText={"Male"} />
+                        <MenuItem value={"female"} primaryText={"Female"} />
+                    </SelectField>
+                </div>
+
+                <div className={style.w1}>
+                    <SelectField
+                        floatingLabelText={"T-Shirt Size"} floatingLabelStyle={floatingLabelStyle}
+                        value={child.tShirt} errorText={child.tShirtError}
+                        onChange={this.__onChildSelectChange(idx, "tShirt")}
+                    >
+                        <MenuItem value={"XS"} primaryText={"XS (2-4)"} />
+                        <MenuItem value={"S"} primaryText={"S (6-8)"} />
+                        <MenuItem value={"M"} primaryText={"M (10-12)"} />
+                        <MenuItem value={"L"} primaryText={"L (14-16)"} />
                     </SelectField>
                 </div>
             </div>
@@ -401,8 +413,11 @@ class Register extends React.Component {
         const {children} = inputs;
 
         return <form className={style.container}>
+
+            <RegisterInformation />
+
             <Paper className={style.registerForm}>
-                <div className={style.registerFormRow}><h2>PARENT INFORMATION</h2></div>
+                <div className={style.registerFormRow}><h3>PARENT INFORMATION</h3></div>
                 <div className={style.registerFormRow}>
                     {this.__renderField("pFirst", "First Name", style.w1)}
                     {this.__renderField("pLast", "Last Name", style.w1)}
@@ -428,7 +443,7 @@ class Register extends React.Component {
             </div>
 
             <Paper className={style.registerForm}>
-                <div className={style.registerFormRow}><h2>EMERGENCY CONTACT</h2></div>
+                <div className={style.registerFormRow}><h3>EMERGENCY CONTACT</h3></div>
                 <div className={style.registerFormRow}>
                     {this.__renderField("eFirst", "First Name", style.w1)}
                     {this.__renderField("eLast", "Last Name", style.w1)}
@@ -438,7 +453,7 @@ class Register extends React.Component {
             </Paper>
 
             <Paper className={style.registerForm}>
-                <div className={style.registerFormRow}><h2>LIABILITY</h2></div>
+                <div className={style.registerFormRow}><h3>LIABILITY</h3></div>
                 <div className={style.registerFormRow}>
                     <p className={style.liability}>
                         I give permission for my child or ward to take part in Evangelical Formosan Church of
@@ -463,6 +478,7 @@ class Register extends React.Component {
                     {this.__renderCheckbox()}
                 </div>
             </Paper>
+
 
             <div className={style.registerForm}>
                 {inputs.submitError ? <span style={{color: 'red'}}>{inputs.submitError}</span> : null}
