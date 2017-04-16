@@ -332,7 +332,7 @@ class Register extends React.Component {
 
                 <div className={style.w1}>
                     <SelectField
-                        floatingLabelText={"Grade"} floatingLabelStyle={floatingLabelStyle}
+                        floatingLabelText={"Grade in Fall 2017"} floatingLabelStyle={floatingLabelStyle}
                         value={child.grade} errorText={child.gradeError}
                         onChange={this.__onChildSelectChange(idx, "grade")}
                     >
