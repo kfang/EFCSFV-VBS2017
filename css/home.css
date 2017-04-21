@@ -6,7 +6,12 @@
 }
 
 .heroImage {
+    flex: 0 1 500px;
+}
+
+.dayCard {
     flex: 0 1 auto;
+    margin: 0.5rem;
 }
 
 img {
