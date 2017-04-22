@@ -1,9 +1,14 @@
 import React from 'react'
 
-import Paper from 'material-ui/Paper'
 import {Card, CardActions, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import FlatButton from 'material-ui/FlatButton'
+
+import Day1 from './daycards/Day1.jsx'
+import Day2 from './daycards/Day2.jsx'
+import Day3 from './daycards/Day3.jsx'
+import Day4 from './daycards/Day4.jsx'
+import Day5 from './daycards/Day5.jsx'
 
 import styles from '../css/about.css'
 
@@ -11,7 +16,7 @@ class About extends React.Component {
     render(){
         return <Tabs className={styles.container}>
             <Tab label="About Us">
-                <Paper className={styles.aboutUs}>
+                <div className={styles.aboutUs}>
                     <Card>
                         <CardHeader title="Who We Are" subtitle="Harvest San Fernando Valley"/>
                         <CardMedia>
@@ -28,11 +33,17 @@ class About extends React.Component {
                             <FlatButton label="What We Believe" href="http://efcsfv.org/harvest/statement-of-faith/" target="_blank"/>
                         </CardActions>
                     </Card>
-                </Paper>
+                </div>
             </Tab>
 
             <Tab label="Schedule">
-
+                <div className={styles.schedule}>
+                    <div className={styles.dayCard}><Day1 /></div>
+                    <div className={styles.dayCard}><Day2 /></div>
+                    <div className={styles.dayCard}><Day3 /></div>
+                    <div className={styles.dayCard}><Day4 /></div>
+                    <div className={styles.dayCard}><Day5 /></div>
+                </div>
             </Tab>
 
             <Tab label="Registration">

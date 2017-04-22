@@ -7,5 +7,20 @@
 }
 
 .aboutUs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+}
+
+.schedule {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.dayCard {
+    flex: 0 1 px;
     margin: 1rem;
 }
