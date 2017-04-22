@@ -1,7 +1,11 @@
 import React from 'react'
 
+import {MdAccessTime, MdDateRange} from 'react-icons/lib/md'
+
+import Paper from 'material-ui/Paper'
 import {Card, CardActions, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card'
 import {Tabs, Tab} from 'material-ui/Tabs'
+import {Table, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableBody} from 'material-ui/Table'
 import FlatButton from 'material-ui/FlatButton'
 
 import Day1 from './daycards/Day1.jsx'
@@ -15,7 +19,7 @@ import styles from '../css/about.css'
 class About extends React.Component {
     render(){
         return <Tabs className={styles.container}>
-            <Tab label="About Us">
+            <Tab label="About Us" value="about">
                 <div className={styles.aboutUs}>
                     <Card>
                         <CardHeader title="Who We Are" subtitle="Harvest San Fernando Valley"/>
@@ -36,8 +40,21 @@ class About extends React.Component {
                 </div>
             </Tab>
 
-            <Tab label="Schedule">
+            <Tab label="Schedule" value="schedule">
                 <div className={styles.schedule}>
+                    <div className={styles.dayCard}>
+                        <Paper className={styles.scheduleCard}>
+                            <h2><MdDateRange/> Date</h2>
+                            Monday, June 19th 2017 to <br />
+                            Friday, June 23rd 2017 <br />
+                            <br />
+                            <br />
+
+                            <h2><MdAccessTime/> Time</h2>
+                            Half Day: 9 AM - 12 PM <br />
+                            Full Day: 9 AM - 3 PM
+                        </Paper>
+                    </div>
                     <div className={styles.dayCard}><Day1 /></div>
                     <div className={styles.dayCard}><Day2 /></div>
                     <div className={styles.dayCard}><Day3 /></div>
@@ -46,8 +63,48 @@ class About extends React.Component {
                 </div>
             </Tab>
 
-            <Tab label="Registration">
+            <Tab label="Registration" value="registration">
+                <div className={styles.schedule}>
+                    <Paper className={styles.regCard} style={{padding: '1rem'}}>
+                        <h2>Registration Instructions</h2>
+                        <ol>
+                            <li>Fill out and submit a registration form <a href="/register">here</a></li>
+                            <li>Please make checks payable to EFC-SFV and write the child/children's name in the memo section</li>
+                            <li>Send the Check to:<br />
+                                EFC-SFV VBS<br />
+                                7702 Tampa Ave.<br />
+                                Reseda, 91335
+                            </li>
+                            <li>Payment must be received by May 14th to get the early bird price.</li>
+                        </ol>
+                        <strong>Note: Your registration is not complete until we receive payment.</strong>
+                    </Paper>
+                    <Paper className={styles.regCard} style={{padding: '1rem'}}>
+                        <h2>Pricing Information</h2>
+                        <Table>
+                            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                                <TableRow>
+                                    <TableHeaderColumn></TableHeaderColumn>
+                                    <TableHeaderColumn>Regular</TableHeaderColumn>
+                                    <TableHeaderColumn>Early Bird (deadline: May 14th)</TableHeaderColumn>
+                                </TableRow>
+                            </TableHeader>
 
+                            <TableBody displayRowCheckbox={false}>
+                                <TableRow>
+                                    <TableRowColumn>1/2 Day</TableRowColumn>
+                                    <TableRowColumn>$40</TableRowColumn>
+                                    <TableRowColumn>$25</TableRowColumn>
+                                </TableRow>
+                                <TableRow>
+                                    <TableRowColumn>Full Day</TableRowColumn>
+                                    <TableRowColumn>$50</TableRowColumn>
+                                    <TableRowColumn>$35</TableRowColumn>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                </div>
             </Tab>
         </Tabs>
     }

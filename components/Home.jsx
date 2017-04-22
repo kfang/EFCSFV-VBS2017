@@ -13,8 +13,8 @@ class Home extends React.Component {
                         <CardText>
                             <strong>What is VBS? </strong><br />
                             Vacation Bible School or VBS is a wonderful opportunity for your child to learn more about
-                            God through music, dancing, games, science and taking a daily biblical adventure. A daily
-                            bible point will be reinforced throughout the day's activities.
+                            God through music, games, and daily biblical adventures. A daily Bible point will be
+                            reinforced throughout the day's activities.
                             <br /><br />
 
                             <strong>What are the dates?</strong><br />

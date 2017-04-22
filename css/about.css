@@ -17,10 +17,26 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
+}
+
+.scheduleCard {
+    padding: 1rem;
+    font-size: 2rem;
+    height: 100%
+}
+
+.scheduleCard h1, h2 {
+    margin: 0 !important;
 }
 
 .dayCard {
-    flex: 0 1 px;
+    flex: 0 1 500px;
     margin: 1rem;
+}
+
+.regCard {
+    flex: 1 1 30%;
+    margin: 1rem;
+    min-width: 300px
 }
