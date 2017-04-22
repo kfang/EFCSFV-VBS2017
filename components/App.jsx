@@ -43,7 +43,6 @@ class App extends React.Component {
                                 <MenuItem onTouchTap={this.__navigate("/home", history)}>Home</MenuItem>
                                 <MenuItem onTouchTap={this.__navigate("/about", history)}>About</MenuItem>
                                 <MenuItem onTouchTap={this.__navigate("/register", history)}>Register</MenuItem>
-                                <MenuItem onTouchTap={this.__navigate("/contact", history)}>Contact</MenuItem>
                             </Drawer>
                         </AppBar>
                     }}/>
