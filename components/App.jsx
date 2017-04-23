@@ -3,10 +3,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
-import {BrowserRouter, Route, withRouter} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 import Home from './Home.jsx'
+import Admin from './Admin.jsx'
 import About from './About.jsx'
 import Register from './Register.jsx'
+import Registrant from './Registrant.jsx'
 
 import style from '../css/app.css'
 
@@ -49,14 +51,15 @@ class App extends React.Component {
 
 
                     <Route exact path="/" component={Home} />
-                    <Route path="/home" component={Home} />
                     <Route path="/about" component={About} />
+                    <Route path="/admin" component={Admin} />
+                    <Route path="/home" component={Home} />
                     <Route path="/register" component={Register} />
+                    <Route path="/registrants/:id" component={Registrant} />
                 </div>
             </BrowserRouter>
         </MuiThemeProvider>
     }
-
 }
 
 export default App

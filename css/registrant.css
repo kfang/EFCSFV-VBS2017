@@ -1,0 +1,15 @@
+.fieldContainer {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.field {
+    flex: 1 1 auto;
+    margin: 1rem !important;
+}
+
+.paper {
+    margin: 1rem;
+    padding: 1rem;
+}

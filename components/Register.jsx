@@ -171,7 +171,7 @@ class Register extends React.Component {
                 cellPhone: inputs.pCellPhone,
 
                 flags: ['guardian'],
-                extraInfomation: {
+                extraInformation: {
                     homeChurch: inputs.pHomeChurch
                 }
             };

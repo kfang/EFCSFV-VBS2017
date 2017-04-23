@@ -1,0 +1,11 @@
+.container {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.registrantsContainer {
+    padding: 1rem;
+}
