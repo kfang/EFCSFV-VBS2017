@@ -2,6 +2,7 @@ import React from 'react'
 import style from '../css/home.css'
 import FlatButton from 'material-ui/FlatButton'
 import {Card, CardActions, CardText, CardTitle} from 'material-ui/Card'
+import PricingTable from './register/PricingTable'
 
 class Home extends React.Component {
     render(){
@@ -29,6 +30,15 @@ class Home extends React.Component {
                             7702 Tampa Ave., <br />
                             Reseda, CA 91335 <br />
                             <a href="https://goo.gl/maps/jdHLArtxzgK2" target="_blank">Directions</a>
+
+                            <br /><br />
+
+                            <strong>Registration</strong><br />
+                            - Click the 'Register Now' button and fill out the form to register<br />
+                            - Registration is open until we receive 75 registrants.<br />
+                            - Your registration is not complete until we receive payment<br />
+                            <div style={{maxWidth: '600px'}}><PricingTable/></div>
+
                         </CardText>
                         <CardActions>
                             <FlatButton label="Learn More" href="/about" primary={true}/>
