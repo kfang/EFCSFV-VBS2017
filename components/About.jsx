@@ -1,20 +1,20 @@
-import React from 'react'
+import React from "react";
 
-import {MdAccessTime, MdDateRange} from 'react-icons/lib/md'
+import {MdAccessTime, MdDateRange} from "react-icons/lib/md";
 
-import Paper from 'material-ui/Paper'
-import {Card, CardActions, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card'
-import {Tabs, Tab} from 'material-ui/Tabs'
-import {Table, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableBody} from 'material-ui/Table'
-import FlatButton from 'material-ui/FlatButton'
+import Paper from "material-ui/Paper";
+import {Card, CardActions, CardHeader, CardMedia, CardText} from "material-ui/Card";
+import {Tab, Tabs} from "material-ui/Tabs";
+import FlatButton from "material-ui/FlatButton";
+import PricingTable from "./register/PricingTable";
 
-import Day1 from './daycards/Day1.jsx'
-import Day2 from './daycards/Day2.jsx'
-import Day3 from './daycards/Day3.jsx'
-import Day4 from './daycards/Day4.jsx'
-import Day5 from './daycards/Day5.jsx'
+import Day1 from "./daycards/Day1.jsx";
+import Day2 from "./daycards/Day2.jsx";
+import Day3 from "./daycards/Day3.jsx";
+import Day4 from "./daycards/Day4.jsx";
+import Day5 from "./daycards/Day5.jsx";
 
-import styles from '../css/about.css'
+import styles from "../css/about.css";
 
 class About extends React.Component {
     render(){
@@ -76,33 +76,13 @@ class About extends React.Component {
                                 Reseda, 91335
                             </li>
                             <li>Payment must be received by May 14th to get the early bird price.</li>
+                            <li>Registration closes when we receive 75 registrants</li>
                         </ol>
                         <strong>Note: Your registration is not complete until we receive payment.</strong>
                     </Paper>
                     <Paper className={styles.regCard} style={{padding: '1rem'}}>
                         <h2>Pricing Information</h2>
-                        <Table>
-                            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                                <TableRow>
-                                    <TableHeaderColumn></TableHeaderColumn>
-                                    <TableHeaderColumn>Regular</TableHeaderColumn>
-                                    <TableHeaderColumn>Early Bird (deadline: May 14th)</TableHeaderColumn>
-                                </TableRow>
-                            </TableHeader>
-
-                            <TableBody displayRowCheckbox={false}>
-                                <TableRow>
-                                    <TableRowColumn>1/2 Day</TableRowColumn>
-                                    <TableRowColumn>$40</TableRowColumn>
-                                    <TableRowColumn>$25</TableRowColumn>
-                                </TableRow>
-                                <TableRow>
-                                    <TableRowColumn>Full Day</TableRowColumn>
-                                    <TableRowColumn>$50</TableRowColumn>
-                                    <TableRowColumn>$35</TableRowColumn>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
+                        <PricingTable/>
                     </Paper>
                 </div>
             </Tab>
