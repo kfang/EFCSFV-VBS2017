@@ -4,14 +4,13 @@ import {withRouter} from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import DatePicker from 'material-ui/DatePicker'
 import FlatButton from 'material-ui/FlatButton'
-import MenuItem from 'material-ui/MenuItem'
-import SelectField from 'material-ui/SelectField'
 import TextField from 'material-ui/TextField'
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
+
+import Registrant from './Registrant'
 
 import styles from '../css/registrant.css'
 
-class Registrant extends React.Component {
+class RegistrantReadPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -46,57 +45,9 @@ class Registrant extends React.Component {
 
     __renderRegistrantCard = () => {
         const {registrant} = this.state;
-        const {allergies, birthday, comments, createdOn, extraInformation = {}, firstName, gender, lastName, flags = []} = registrant;
-        const {grade, stay, tShirt} = extraInformation;
-
-        const birthdayDate = birthday ? new Date(birthday) : null;
-        const createdOnDate = createdOn ? new Date(createdOn) : null;
-        const isPaid = !flags.includes('unpaid');
-
         return <Paper className={styles.paper}>
             <h2>Registrant</h2>
-            <div className={styles.fieldContainer}>
-                <TextField className={styles.field} floatingLabelText="First Name" value={firstName}/>
-                <TextField className={styles.field} floatingLabelText="Last Name" value={lastName}/>
-                <DatePicker className={styles.field} floatingLabelText="Birthday" value={birthdayDate}/>
-                <SelectField className={styles.field} floatingLabelText={"Gender"} value={gender}>
-                    <MenuItem value={"male"} primaryText={"Male"} />
-                    <MenuItem value={"female"} primaryText={"Female"} />
-                </SelectField>
-            </div>
-            <div className={styles.fieldContainer}>
-                <DatePicker className={styles.field} floatingLabelText="Registered On" value={createdOnDate}/>
-                <SelectField className={styles.field} value={grade} floatingLabelText="Grade">
-                    <MenuItem value={"p"} primaryText={"Pre-school"} />
-                    <MenuItem value={"k"} primaryText={"Kindergarten"} />
-                    <MenuItem value={"1"} primaryText={"1st Grade"} />
-                    <MenuItem value={"2"} primaryText={"2nd Grade"} />
-                    <MenuItem value={"3"} primaryText={"3rd Grade"} />
-                    <MenuItem value={"4"} primaryText={"4th Grade"} />
-                    <MenuItem value={"5"} primaryText={"5th Grade"} />
-                    <MenuItem value={"6+"} primaryText={"6th+ Grade"} />
-                </SelectField>
-                <SelectField className={styles.field} floatingLabelText={"Full/Half Day"} value={stay}>
-                    <MenuItem value={"full-day"} primaryText={"Full Day"} />
-                    <MenuItem value={"half-day"} primaryText={"Half Day"} />
-                </SelectField>
-                <SelectField className={styles.field} floatingLabelText={"T-Shirt Size"} value={tShirt}>
-                    <MenuItem value={"XS"} primaryText={"XS (2-4)"} />
-                    <MenuItem value={"S"} primaryText={"S (6-8)"} />
-                    <MenuItem value={"M"} primaryText={"M (10-12)"} />
-                    <MenuItem value={"L"} primaryText={"L (14-16)"} />
-                </SelectField>
-                <SelectField className={styles.field} floatingLabelText={"Payment Status"} value={isPaid}>
-                    <MenuItem value={true} primaryText="Paid" />
-                    <MenuItem value={false} primaryText="Unpaid" />
-                </SelectField>
-            </div>
-            <div className={styles.fieldContainer}>
-                <TextField className={styles.field} floatingLabelText="Allergies" value={allergies} multiLine={true} />
-            </div>
-            <div className={styles.fieldContainer}>
-                <TextField className={styles.field} floatingLabelText="Comments" value={comments} multiLine={true} />
-            </div>
+            <Registrant registrant={registrant} onRegistrantUpdated={this.__onRegistrantUpdated}/>
         </Paper>
     };
 
@@ -155,6 +106,11 @@ class Registrant extends React.Component {
         </Paper>
     };
 
+
+    __onRegistrantUpdated = (registrant) => {
+        this.setState({registrant: registrant})
+    };
+
     render(){
         const {contacts} = this.state;
         const guardian = contacts.find((c) => {return c.flags.includes('guardian')});
@@ -170,4 +126,4 @@ class Registrant extends React.Component {
     }
 }
 
-export default withRouter(Registrant)
+export default withRouter(RegistrantReadPage)

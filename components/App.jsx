@@ -8,7 +8,7 @@ import Home from './Home.jsx'
 import Admin from './Admin.jsx'
 import About from './About.jsx'
 import Register from './Register.jsx'
-import Registrant from './Registrant.jsx'
+import RegistrantReadPage from './RegistrantReadPage.jsx'
 
 import style from '../css/app.css'
 
@@ -55,7 +55,7 @@ class App extends React.Component {
                     <Route path="/admin" component={Admin} />
                     <Route path="/home" component={Home} />
                     <Route path="/register" component={Register} />
-                    <Route path="/registrants/:id" component={Registrant} />
+                    <Route path="/registrants/:id" component={RegistrantReadPage} />
                 </div>
             </BrowserRouter>
         </MuiThemeProvider>
